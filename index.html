@@ -350,6 +350,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#hjem" onclick="closeMenu()">Hjem</a></li>
                 <li><a href="#tjenester" onclick="closeMenu()">Tjenester</a></li>
+                                <li><a href="#bestill" onclick="closeMenu()">Bestill time</a></li>
                 <li><a href="#om-oss" onclick="closeMenu()">Om oss</a></li>
                 <li><a href="#anmeldelser" onclick="closeMenu()">Anmeldelser</a></li>
                 <li><a href="#kontakt" onclick="closeMenu()">Kontakt</a></li>
@@ -499,6 +500,86 @@
             </div>
         </div>
     </section>
+
+        <!-- Bestill Time -->
+    <section id="bestill" style="background: var(--light);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Bestill Time</h2>
+                <p>Fyll ut skjemaet under så kontakter vi deg for bekreftelse</p>
+            </div>
+            
+            <div style="max-width: 600px; margin: 0 auto;">
+                <form id="bookingForm" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">Navn *</label>
+                        <input type="text" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">Telefon *</label>
+                        <input type="tel" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">E-post</label>
+                        <input type="email" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">Ønsket tjeneste *</label>
+                        <select required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; background: white;">
+                            <option value="">Velg tjeneste...</option>
+                            <option value="dameklipp">Dameklipp (kr 600)</option>
+                            <option value="dameklipp-fon">Dameklipp & Føn (kr 800)</option>
+                            <option value="dameklipp-lang">Dameklipp Lang (kr 700)</option>
+                            <option value="herreklipp">Herreklipp (kr 350)</option>
+                            <option value="herreklipp-skjegg">Herreklipp & Skjegg (kr 500)</option>
+                            <option value="fade">Fade Klipp (kr 400)</option>
+                            <option value="farge">Hårfarge (fra kr 800)</option>
+                            <option value="highlights">Highlights (fra kr 1200)</option>
+                            <option value="balayage">Balayage (fra kr 1500)</option>
+                            <option value="permanent">Permanent (fra kr 1000)</option>
+                            <option value="massasje30">Massasje 30 min (kr 400)</option>
+                            <option value="massasje60">Massasje 60 min (kr 700)</option>
+                            <option value="harkur">Hårkur (fra kr 300)</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">Ønsket dato</label>
+                        <input type="date" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">Ønsket tidspunkt</label>
+                        <select style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; background: white;">
+                            <option value="">Velg tidspunkt...</option>
+                            <option value="09:00">09:00</option>
+                            <option value="10:00">10:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="12:00">12:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="14:00">14:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="16:00">16:00</option>
+                            <option value="17:00">17:00</option>
+                        </select>
+                    </div>
+                    
+                    <div style="margin-bottom: 25px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--dark);">Melding</label>
+                        <textarea rows="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; resize: vertical;" placeholder="Har du spesielle ønsker?"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn" style="width: 100%; padding: 15px; border: none; cursor: pointer;">Send forespørsel</button>
+                    
+                    <p style="margin-top: 15px; font-size: 14px; color: #666; text-align: center;">* Påkrevde felt</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Kontakt -->
     <section id="kontakt">
