@@ -1,337 +1,564 @@
 <!DOCTYPE html>
 <html lang="no">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Kom Inn Frisør AS – Bergen</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0e0e0e;--surface:#161616;--surface2:#1f1f1f;--border:#2a2a2a;--text:#f0ede8;--muted:#888;--accent:#c9a96e;--accent2:#e8c89a;--radius:12px;--font-serif:'Playfair Display',serif;--font-sans:'Inter',sans-serif}
-html{font-family:var(--font-sans);background:var(--bg);color:var(--text);font-size:16px}
-body{min-height:100vh;display:flex;flex-direction:column}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:68px;background:rgba(14,14,14,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-.nav-logo{font-family:var(--font-serif);font-size:1.35rem;color:var(--accent);letter-spacing:0.02em;text-decoration:none;cursor:pointer}
-.nav-links{display:flex;gap:0.25rem}
-.nav-links button{background:none;border:none;color:var(--muted);font-family:var(--font-sans);font-size:0.85rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;padding:0.5rem 1rem;border-radius:6px;cursor:pointer;transition:color .2s,background .2s}
-.nav-links button:hover{color:var(--text);background:var(--surface2)}
-.nav-links button.active{color:var(--accent);background:rgba(201,169,110,0.1)}
-.nav-cta{background:var(--accent);color:#0e0e0e;border:none;font-family:var(--font-sans);font-size:0.82rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:0.55rem 1.2rem;border-radius:6px;cursor:pointer;transition:background .2s}
-.nav-cta:hover{background:var(--accent2)}
-main{padding-top:68px;flex:1}
-.page{display:none;animation:fadeIn .3s ease}
-.page.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-.hero{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - 68px);align-items:center;gap:4rem;padding:4rem 5vw}
-.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(201,169,110,0.12);border:1px solid rgba(201,169,110,0.3);color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 0.9rem;border-radius:100px;margin-bottom:1.5rem}
-.hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%}
-.hero h1{font-family:var(--font-serif);font-size:clamp(2.8rem,5vw,4.5rem);font-weight:400;line-height:1.1;color:var(--text);margin-bottom:1.25rem}
-.hero h1 em{font-style:italic;color:var(--accent)}
-.hero p{color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:480px;margin-bottom:2.5rem}
-.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
-.btn-primary{background:var(--accent);color:#0e0e0e;border:none;font-family:var(--font-sans);font-size:0.88rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.85rem 2rem;border-radius:8px;cursor:pointer;transition:background .2s,transform .15s}
-.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
-.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);font-family:var(--font-sans);font-size:0.88rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;padding:0.85rem 2rem;border-radius:8px;cursor:pointer;transition:border-color .2s,color .2s}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent)}
-.hero-stats{display:flex;gap:2.5rem;margin-top:3rem;padding-top:2.5rem;border-top:1px solid var(--border)}
-.hero-stats .num{font-family:var(--font-serif);font-size:2rem;color:var(--accent);display:block}
-.hero-stats .label{font-size:0.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-top:0.2rem;display:block}
-.hero-visual{position:relative;display:flex;align-items:center;justify-content:center}
-.hero-img-wrap{width:100%;aspect-ratio:4/5;border-radius:24px;overflow:hidden;background:linear-gradient(135deg,#1a1510 0%,#2a1f14 50%,#1a1510 100%);display:flex;align-items:center;justify-content:center;border:1px solid var(--border)}
-.hero-img-placeholder{text-align:center;color:var(--muted)}
-.hero-img-placeholder p{font-size:0.85rem;opacity:0.6;margin-top:1rem}
-.hero-badge{position:absolute;bottom:2rem;left:-2rem;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem 1.25rem;display:flex;align-items:center;gap:0.75rem}
-.stars{color:var(--accent);font-size:1rem;letter-spacing:2px}
-.badge-text strong{display:block;font-size:0.9rem;color:var(--text)}
-.badge-text span{font-size:0.75rem;color:var(--muted)}
-section{padding:5rem 5vw}
-.section-label{display:inline-flex;align-items:center;gap:0.5rem;color:var(--accent);font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1rem}
-.section-label::before{content:'';width:24px;height:1px;background:var(--accent)}
-h2.section-title{font-family:var(--font-serif);font-size:clamp(2rem,4vw,3rem);font-weight:400;line-height:1.2;margin-bottom:1rem}
-h2.section-title em{font-style:italic;color:var(--accent)}
-.section-sub{color:var(--muted);font-size:1rem;line-height:1.7;max-width:520px;margin-bottom:3rem}
-.category-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
-.cat-tab{background:var(--surface2);color:var(--muted);border:1px solid var(--border);font-size:0.78rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.45rem 1rem;border-radius:6px;cursor:pointer;transition:.2s}
-.cat-tab.active{background:rgba(201,169,110,0.12);color:var(--accent);border-color:rgba(201,169,110,0.35)}
-.services-list{display:flex;flex-direction:column;gap:0.75rem}
-.svc-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:1.25rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:.2s}
-.svc-row:hover{border-color:var(--accent)}
-.svc-row.selected{border-color:var(--accent);background:rgba(201,169,110,0.06)}
-.svc-title{font-size:0.98rem;font-weight:500;margin-bottom:0.25rem}
-.svc-desc{font-size:0.8rem;color:var(--muted);line-height:1.5}
-.svc-price{font-size:1rem;font-weight:600;color:var(--accent);text-align:right;min-width:70px}
-.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
-.review-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem}
-.review-stars{color:var(--accent);font-size:0.9rem;margin-bottom:1rem;letter-spacing:2px}
-.review-text{font-size:0.92rem;line-height:1.7;color:var(--text);margin-bottom:1.25rem;font-style:italic}
-.review-author{font-size:0.8rem;color:var(--muted)}
-.review-author strong{color:var(--text)}
-.review-service{font-size:0.72rem;color:var(--accent);margin-top:0.25rem}
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
-.contact-item{display:flex;gap:1rem;margin-bottom:2rem}
-.contact-icon{width:42px;height:42px;background:rgba(201,169,110,0.1);border:1px solid rgba(201,169,110,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
-.contact-item-text strong{display:block;font-size:0.85rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.25rem}
-.contact-item-text span{font-size:0.95rem;color:var(--text)}
-.hours-table{width:100%;border-collapse:collapse;margin-top:1.5rem}
-.hours-table td{padding:0.6rem 0;font-size:0.9rem;border-bottom:1px solid var(--border)}
-.hours-table td:first-child{color:var(--muted)}
-.hours-table td:last-child{text-align:right;color:var(--text);font-weight:500}
-.booking-layout{display:grid;grid-template-columns:300px 1fr;gap:2.5rem;padding:3rem 5vw;min-height:calc(100vh - 68px)}
-.booking-sidebar h2{font-family:var(--font-serif);font-size:1.8rem;margin-bottom:0.5rem}
-.booking-sidebar p{color:var(--muted);font-size:0.9rem;line-height:1.6;margin-bottom:2rem}
-.step{display:flex;align-items:flex-start;gap:1rem;padding:0.75rem 0;border-bottom:1px solid var(--border)}
-.step:last-child{border-bottom:none}
-.step-num{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:600;color:var(--muted);flex-shrink:0;transition:.3s}
-.step.done .step-num{background:var(--accent);border-color:var(--accent);color:#0e0e0e}
-.step.current .step-num{border-color:var(--accent);color:var(--accent)}
-.step-info strong{display:block;font-size:0.88rem;color:var(--muted)}
-.step.current .step-info strong,.step.done .step-info strong{color:var(--text)}
-.step-info span{font-size:0.8rem;color:var(--muted)}
-.booking-section{display:none}
-.booking-section.active{display:block}
-.booking-section h3{font-family:var(--font-serif);font-size:1.5rem;margin-bottom:0.35rem}
-.booking-sub{color:var(--muted);font-size:0.9rem;margin-bottom:1.75rem}
-.date-month-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
-.month-title{font-family:var(--font-serif);font-size:1.1rem}
-.month-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:6px;cursor:pointer;font-size:1rem}
-.date-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:0.4rem;margin-bottom:2rem}
-.day-label{text-align:center;font-size:0.72rem;color:var(--muted);text-transform:uppercase;padding:0.5rem 0}
-.day-cell{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:8px;font-size:0.88rem;cursor:pointer;border:1px solid transparent;transition:.2s}
-.day-cell.empty{pointer-events:none}
-.day-cell.past{color:var(--border);pointer-events:none}
-.day-cell.available{color:var(--text);border-color:var(--border)}
-.day-cell.available:hover{border-color:var(--accent);color:var(--accent)}
-.day-cell.selected{background:var(--accent);color:#0e0e0e;font-weight:600;border-color:var(--accent)}
-.day-cell.today{border-color:rgba(201,169,110,0.5)}
-.time-section h4{font-size:0.85rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
-.time-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(85px,1fr));gap:0.6rem;margin-bottom:2rem}
-.time-slot{padding:0.65rem;text-align:center;border-radius:8px;border:1px solid var(--border);font-size:0.88rem;cursor:pointer;transition:.2s;position:relative}
-.time-slot.free{color:var(--text)}
-.time-slot.free:hover{border-color:var(--accent);color:var(--accent)}
-.time-slot.booked{color:var(--border);pointer-events:none;background:var(--surface)}
-.time-slot.booked::after{content:'Opptatt';position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:0.6rem;color:var(--muted);white-space:nowrap}
-.time-slot.selected{background:var(--accent);color:#0e0e0e;font-weight:600;border-color:var(--accent)}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-group{display:flex;flex-direction:column;gap:0.5rem}
-.form-group.full{grid-column:1/-1}
-.form-group label{font-size:0.8rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted)}
-.form-group input,.form-group textarea{background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:var(--font-sans);font-size:0.95rem;padding:0.8rem 1rem;border-radius:8px;outline:none;transition:border-color .2s}
-.form-group input:focus,.form-group textarea:focus{border-color:var(--accent)}
-.form-group textarea{resize:vertical;min-height:100px}
-.booking-summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;margin-bottom:1.5rem}
-.booking-summary h4{font-family:var(--font-serif);font-size:1.1rem;margin-bottom:1rem}
-.summary-row{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.9rem}
-.summary-row:last-child{border-bottom:none;font-weight:600;color:var(--accent);font-size:1rem}
-.nav-btns{display:flex;gap:1rem;margin-top:2rem}
-.btn-back{background:transparent;color:var(--muted);border:1px solid var(--border);font-family:var(--font-sans);font-size:0.85rem;font-weight:500;padding:0.75rem 1.5rem;border-radius:8px;cursor:pointer;transition:.2s}
-.btn-back:hover{border-color:var(--text);color:var(--text)}
-.btn-next{background:var(--accent);color:#0e0e0e;border:none;font-family:var(--font-sans);font-size:0.88rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;padding:0.75rem 2rem;border-radius:8px;cursor:pointer;transition:.2s;flex:1}
-.btn-next:hover{background:var(--accent2)}
-.btn-next:disabled{background:var(--surface2);color:var(--muted);cursor:not-allowed}
-.success-box{text-align:center;padding:4rem 2rem}
-.success-box .check{font-size:4rem;margin-bottom:1rem}
-.success-box h3{font-family:var(--font-serif);font-size:2rem;margin-bottom:1rem}
-.success-box p{color:var(--muted);font-size:1rem;line-height:1.7;max-width:400px;margin:0 auto 2rem}
-footer{background:var(--surface);border-top:1px solid var(--border);padding:2rem 5vw;display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--muted)}
-.footer-logo{font-family:var(--font-serif);color:var(--accent);font-size:1.1rem}
-@media(max-width:768px){
-.hero{grid-template-columns:1fr;gap:2rem;padding:2rem 1.5rem}
-.hero-visual{display:none}
-.contact-grid{grid-template-columns:1fr}
-.booking-layout{grid-template-columns:1fr}
-.booking-sidebar{display:none}
-.form-grid{grid-template-columns:1fr}
-.nav-links{display:none}
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kom Inn Frisør AS - Bergen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #d4a574;
+            --dark: #2c2c2c;
+            --light: #f8f8f8;
+            --accent: #8b7355;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Watermark */
+        #watermark {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 10000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255,255,255,0.98);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        /* Hero */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('data:image/svg+xml,%3Csvg width="100" height="100" xmlns="http://www.w3.org/2000/svg"%3E%3Crect width="100" height="100" fill="%23d4a574"/%3E%3C/svg%3E');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn:hover {
+            background: transparent;
+            color: var(--primary);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .section-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .service-card .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 15px 0;
+        }
+        
+        .service-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+        
+        /* About Section */
+        #om-oss {
+            background: var(--light);
+        }
+        
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        .salon-info {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .salon-info h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        /* Reviews */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        
+        .review-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .review-stars {
+            color: #ffa41c;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .review-text {
+            color: #555;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        
+        .review-author {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        /* Contact */
+        #kontakt {
+            background: var(--dark);
+            color: white;
+        }
+        
+        #kontakt h2 {
+            color: white;
+        }
+        
+        #kontakt p {
+            color: #ccc;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .contact-item h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .contact-item p {
+            line-height: 1.8;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: #888;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                right: -100%;
+                background: white;
+                flex-direction: column;
+                width: 250px;
+                padding: 30px;
+                box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+                transition: right 0.3s;
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-<nav>
-  <span class="nav-logo" onclick="showPage('hjem')">Kom Inn Frisør</span>
-  <div class="nav-links">
-    <button onclick="showPage('hjem')" id="nav-hjem" class="active">Hjem</button>
-    <button onclick="showPage('tjenester')" id="nav-tjenester">Tjenester</button>
-    <button onclick="showPage('anmeldelser')" id="nav-anmeldelser">Anmeldelser</button>
-    <button onclick="showPage('kontakt')" id="nav-kontakt">Kontakt</button>
-  </div>
-  <button class="nav-cta" onclick="showPage('bestill')">Bestill time</button>
-</nav>
-
-<main>
-
-<div class="page active" id="page-hjem">
-  <div class="hero">
-    <div class="hero-content">
-      <div class="hero-tag">Frisørsalong i Bergen</div>
-        <h1>Frisørsalong i Bergen sentrum</h1>      <p>Velkommen til Kom Inn Frisør i Valkendorfsgaten 7. Vi tilbyr profesjonell klipp, farge og behandling i en varm og avslappende atmosfære. Book time eller stikk innom!</p>
-      <div class="hero-actions">
-        <button class="btn-primary" onclick="showPage('bestill')">Bestill time</button>
-        <button class="btn-secondary" onclick="showPage('tjenester')">Se tjenester</button>
-      </div>
-      <div class="hero-stats">
-        <div><span class="num">37</span><span class="label">Google-anmeldelser</span></div>
-        <div><span class="num">5★</span><span class="label">Gjennomsnitt</span></div>
-        <div><span class="num">10+</span><span class="label">År erfaring</span></div>
-      </div>
+    <!-- Watermark -->
+    <div id="watermark">
+        DEMO - Kontakt for fullversjon
     </div>
-    <div class="hero-visual">
-      <div class="hero-img-wrap">
-        <div class="hero-img-placeholder">
-          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="80" height="80"><circle cx="40" cy="28" r="16" stroke="#c9a96e" stroke-width="2"/><path d="M12 72c0-15.464 12.536-28 28-28s28 12.536 28 28" stroke="#c9a96e" stroke-width="2"/></svg>
-          <p>Legg til salongens bilde her</p>
-        </div>
-      </div>
-      <div class="hero-badge">
-        <div class="stars">★★★★★</div>
-        <div class="badge-text"><strong>37 anmeldelser</strong><span>Google Maps</span></div>
-      </div>
-    </div>
-  </div>
-</div>
 
-<div class="page" id="page-tjenester">
-  <section>
-    <div class="section-label">Våre tjenester</div>
-    <h2 class="section-title">Alt du trenger<br>for <em>perfekt hår</em></h2>
-    <p class="section-sub">Vi tilbyr et komplett utvalg av frisørtjenester. Alle priser inkluderer vask og føning der det er angitt.</p>
-    <div class="category-tabs">
-      <button class="cat-tab active" onclick="filterCat('alle',this)">Alle</button>
-      <button class="cat-tab" onclick="filterCat('klipp',this)">Klipp</button>
-      <button class="cat-tab" onclick="filterCat('farge',this)">Farge</button>
-      <button class="cat-tab" onclick="filterCat('striper',this)">Striper</button>
-      <button class="cat-tab" onclick="filterCat('annet',this)">Annet</button>
-    </div>
-    <div class="services-list" id="services-list"></div>
-  </section>
-</div>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="logo">Kom Inn Frisør</a>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hjem" onclick="closeMenu()">Hjem</a></li>
+                <li><a href="#tjenester" onclick="closeMenu()">Tjenester</a></li>
+                <li><a href="#om-oss" onclick="closeMenu()">Om oss</a></li>
+                <li><a href="#anmeldelser" onclick="closeMenu()">Anmeldelser</a></li>
+                <li><a href="#kontakt" onclick="closeMenu()">Kontakt</a></li>
+            </ul>
+        </div>
+    </nav>
 
-<div class="page" id="page-anmeldelser">
-  <section>
-    <div class="section-label">Hva kundene sier</div>
-    <h2 class="section-title">37 fornøyde<br><em>kunder</em></h2>
-    <p class="section-sub">Ekte anmeldelser fra Google Maps. Kwan setter pris på alle tilbakemeldinger!</p>
-    <div class="reviews-grid" id="reviews-grid"></div>
-  </section>
-</div>
+    <!-- Hero -->
+    <section class="hero" id="hjem">
+        <div class="hero-content">
+            <h1>Kom Inn Frisør AS</h1>
+            <p>Frisørsalong i Bergen sentrum</p>
+            <a href="#tjenester" class="btn btn-outline">Se våre tjenester</a>
+        </div>
+    </section>
 
-<div class="page" id="page-kontakt">
-  <section>
-    <div class="section-label">Finn oss</div>
-    <h2 class="section-title">Kontakt <em>oss</em></h2>
-    <div class="contact-grid">
-      <div>
-        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-item-text"><strong>Adresse</strong><span>Valkendorfsgaten 7, Bergen</span></div></div>
-        <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-item-text"><strong>Telefon</strong><span>Ring for time</span></div></div>
-        <div class="contact-item"><div class="contact-icon">✉️</div><div class="contact-item-text"><strong>E-post</strong><span>post@kominn.no</span></div></div>
-        <table class="hours-table">
-          <tr><td>Mandag – fredag</td><td>09:00 – 18:00</td></tr>
-          <tr><td>Lørdag</td><td>10:00 – 16:00</td></tr>
-          <tr><td>Søndag</td><td>Stengt</td></tr>
-        </table>
-      </div>
-      <div style="border-radius:12px;overflow:hidden;border:1px solid #2a2a2a;height:320px">
-        <iframe src="https://maps.google.com/maps?q=Valkendorfsgaten+7,Bergen&output=embed" width="100%" height="100%" frameborder="0" style="border:0" allowfullscreen></iframe>
-      </div>
-    </div>
-  </section>
-</div>
+    <!-- Om Oss -->
+    <section id="om-oss">
+        <div class="container">
+            <div class="about-content">
+                <div class="section-header">
+                    <h2>Velkommen</h2>
+                </div>
+                <p>Velkommen til vår salong i Valkendorfsgaten 7. Du kan nå bestille time eller, dersom du heller liker å komme direkte, så hjertelig velkommen.</p>
+                <div class="salon-info">
+                    <h3>Valkendorfsgaten 7, Bergen</h3>
+                    <p>Vi ser frem til å ta imot deg!</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<div class="page" id="page-bestill">
-  <div class="booking-layout">
-    <div class="booking-sidebar">
-      <h2>Bestill time</h2>
-      <p>Velg tjeneste, dato og tid. Vi bekrefter innen kort tid.</p>
-      <div id="step-list"></div>
-    </div>
-    <div class="booking-main">
-      <div class="booking-section active" id="bs-1">
-        <h3>Velg tjeneste</h3>
-        <p class="booking-sub">Hvilken behandling ønsker du?</p>
-        <div class="category-tabs">
-          <button class="cat-tab active" onclick="filterBookingCat('alle',this)">Alle</button>
-          <button class="cat-tab" onclick="filterBookingCat('klipp',this)">Klipp</button>
-          <button class="cat-tab" onclick="filterBookingCat('farge',this)">Farge</button>
-          <button class="cat-tab" onclick="filterBookingCat('striper',this)">Striper</button>
-          <button class="cat-tab" onclick="filterBookingCat('annet',this)">Annet</button>
-        </div>
-        <div class="services-list" id="booking-services"></div>
-        <div class="nav-btns"><button class="btn-next" id="btn-next-1" onclick="goStep(2)" disabled>Velg dato &rarr;</button></div>
-      </div>
-      <div class="booking-section" id="bs-2">
-        <h3>Velg dato og tid</h3>
-        <p class="booking-sub">Ledige tider vises i grønt. Opptatte tider er markert.</p>
-        <div class="date-month-nav">
-          <button class="month-btn" onclick="changeMonth(-1)">‹</button>
-          <span class="month-title" id="month-title"></span>
-          <button class="month-btn" onclick="changeMonth(1)">›</button>
-        </div>
-        <div class="date-grid" id="date-grid"></div>
-        <div class="time-section">
-          <h4>Ledige tider</h4>
-          <div class="time-grid" id="time-grid"></div>
-        </div>
-        <div class="nav-btns">
-          <button class="btn-back" onclick="goStep(1)">← Tilbake</button>
-          <button class="btn-next" id="btn-next-2" onclick="goStep(3)" disabled>Fyll inn info &rarr;</button>
-        </div>
-      </div>
-      <div class="booking-section" id="bs-3">
-        <h3>Din informasjon</h3>
-        <p class="booking-sub">Fyll inn kontaktinformasjon så vi kan bekrefte timen.</p>
-        <div class="booking-summary" id="booking-summary"></div>
-        <div class="form-grid">
-          <div class="form-group"><label>Fornavn</label><input id="f-navn" type="text" placeholder="Kari Nordmann"/></div>
-          <div class="form-group"><label>Telefon</label><input id="f-tlf" type="tel" placeholder="+47 900 00 000"/></div>
-          <div class="form-group full"><label>E-post</label><input id="f-epost" type="email" placeholder="kari@epost.no"/></div>
-          <div class="form-group full"><label>Melding (valgfritt)</label><textarea id="f-melding" placeholder="Spesielle ønsker eller informasjon..."></textarea></div>
-        </div>
-        <div class="nav-btns">
-          <button class="btn-back" onclick="goStep(2)">← Tilbake</button>
-          <button class="btn-next" onclick="sendBooking()">Send forespørsel ✓</button>
-        </div>
-      </div>
-      <div class="booking-section" id="bs-4">
-        <div class="success-box">
-          <div class="check">✅</div>
-          <h3>Forespørsel sendt!</h3>
-          <p>Vi bekrefter timen din så snart som mulig. Sjekk e-posten din for bekreftelse.</p>
-          <button class="btn-primary" onclick="showPage('hjem')">Tilbake til forsiden</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    <!-- Tjenester -->
+    <section id="tjenester">
+        <div class="container">
+            <div class="section-header">
+                <h2>Våre Tjenester</h2>
+                <p>Profesjonell hårpleie og styling i hjertet av Bergen</p>
+            </div>
+            
+            <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 1.5rem;">Dameklipp</h3>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Dameklipp</h3>
+                    <div class="price">kr 600</div>
+                    <p>Profesjonell dameklipp tilpasset deg</p>
+                </div>
+                <div class="service-card">
+                    <h3>Dameklipp & Føn</h3>
+                    <div class="price">kr 800</div>
+                    <p>Klipp og styling</p>
+                </div>
+                <div class="service-card">
+                    <h3>Dameklipp Lang</h3>
+                    <div class="price">kr 700</div>
+                    <p>Klipp for langt hår</p>
+                </div>
+            </div>
 
-</main>
-<footer>
-  <span class="footer-logo">Kom Inn Frisør AS</span>
-  <span>Valkendorfsgaten 7, Bergen &nbsp;&bull;&nbsp; © 2025</span>
-  <span style="font-size:0.75rem;color:#555">Demo av sitekick.no</span>
-</footer>
-<script>
-const SERVICES=[{id:1,cat:'klipp',name:'Dameklipp (kort)',desc:'Klipp og styling av kort hår inkl. vask & føning',price:650},{id:2,cat:'klipp',name:'Dameklipp (langt)',desc:'Klipp og styling av langt hår inkl. vask & føning',price:750},{id:3,cat:'klipp',name:'Herreklipp',desc:'Klipp eller styling, pris avhengig av hårlengde, inkl. vask',price:450},{id:4,cat:'klipp',name:'Pannelugg',desc:'Klipp av pannelugg',price:150},{id:5,cat:'klipp',name:'Barneklipp',desc:'Klipp av barn, pris opp til 550 avhengig av hårlengde',price:450},{id:6,cat:'farge',name:'Farge kort hår',desc:'Farge, hårlengder ovenfor kjevehøyde. Vask og føning inkludert.',price:1500},{id:7,cat:'farge',name:'Farge mellomlangt hår',desc:'Farge, hårlengder ovenfor skuldrene. Vask og føning inkludert.',price:1750},{id:8,cat:'farge',name:'Farge langt hår',desc:'Farge, hårlengder ned til skulderbladene. Vask og føning inkludert.',price:2000},{id:9,cat:'farge',name:'Farge ekstra langt hår',desc:'Farge, hårlengder under skulderbladene. Vask og føning inkludert.',price:2500},{id:10,cat:'farge',name:'Farge ettervekst',desc:'Ettervekst (maks 3 cm). Gjelder ikke farging som krever bleking.',price:1200},{id:11,cat:'striper',name:'Striper (kort)',desc:'Striper med folie, hårlengder ovenfor kjevehøyde. Vask og føning inkludert.',price:2000},{id:12,cat:'striper',name:'Striper (mellomlangt)',desc:'Striper med folie, hårlengde ovenfor skuldrene. Vask og føning inkludert.',price:2500},{id:13,cat:'striper',name:'Striper (langt)',desc:'Striper med folie, hårlengde ned til skulderbladene. Vask og føning inkludert.',price:3000},{id:14,cat:'striper',name:'Striper (ekstra langt)',desc:'Bølger, hårlengder under skulderbladene. Vask og føning inkludert.',price:3500},{id:15,cat:'annet',name:'Hodebunn massasje',desc:'Massasje av hodebunn og nakke',price:250},{id:16,cat:'annet',name:'Farge bryn',desc:'Farging av øyebryn til ønsket farge',price:450}];
-const REVIEWS=[{name:'Toril R',service:'Dameklipp',time:'3 dager siden',text:'Svært hyggelig atmosfære og servise. Skikkelig bra pleie og klipp!! Anbefales, virkelig ;)'},{name:'Ingunn G',service:'Dameklipp',time:'8 dager siden',text:'Behagelig frisør. Hårvask med massasje var bare deilig. Fin hårklipp også'},{name:'Rune H',service:'Herreklipp',time:'en måned siden',text:'Utrolig dyktig frisør, hyggelig og god service'},{name:'Susanne M',service:'Dameklipp',time:'2 måneder siden',text:'Veldig hyggelig og flink :) Ble meget fornøyd'},{name:'Erna-karin P',service:'Dameklipp',time:'2 måneder siden',text:'En av de beste / mest behagelige opplevelsene jeg har hatt hos en frisør - håret ble akkurat som jeg ville og hun tok seg tid. Anbefales på det varmeste.'},{name:'Maria K',service:'Dameklipp',time:'2 måneder siden',text:'Så hyggelig og snill dame! Utrolig flink og hørte på mine ønsker! 10/10'},{name:'Alba G',service:'Dameklipp',time:'3 måneder siden',text:'Fantastisk flott opplevelse å bli klippet av Kwan! Hun er utrolig hyggelig og veldig flink. Super fornøyd med resultatet og drar gjerne tilbake.'},{name:'Oliver C',service:'Herreklipp',time:'3 måneder siden',text:'Har blitt fast kunde her, veldig hyggelig og flink frisør!'},{name:'Marita M',service:'Dameklipp',time:'5 måneder siden',text:'Håret mitt var helt krise, og jeg gikk ut døren med en følelse av helt nytt hår! Jeg er så fornøyd. Kwan er veldig dyktig, anbefaler hun på det varmeste ✨'},{name:'Thomas S',service:'Herreklipp',time:'5 måneder siden',text:'Super happy with the haircut. Would definitely go to Kwan again! :)'},{name:'Andreas P',service:'Herreklipp',time:'6 måneder siden',text:'Ekstremt hyggelig og flink frisør 😁'},{name:'Liljeknott',service:'Dameklipp',time:'7 måneder siden',text:'Veldig hyggelig og talentfull dame! Tok seg tid for at det skulle bli perfekt, og gav god hodebunnsmasasje :)'},{name:'Katharina C',service:'Dameklipp',time:'8 måneder siden',text:'Mitt andre besøk hos Kwan, og det blir garantert fler 😊 Veldig god hårvask med hodebunnsmasasje og profesjonell hårklipp på langt hår. Kjempefornøyd!'},{name:'Erlend B',service:'Herreklipp',time:'5 måneder siden',text:'Beste frisøren i Bergen veldig flink'},{name:'Christoffer B',service:'Herreklipp',time:'10 måneder siden',text:'Finnes ingen bedre en Kwan, får alltid topp klipp og service 😍'},{name:'Elisabeth S',service:'Dameklipp',time:'10 måneder siden',text:'Veldig fornøyd med hårklippen. Beste hodemassasjen/hårvasken jeg har vært borti!'},{name:'Inger J',service:'Dameklipp',time:'ett år siden',text:'Utrolig dyktig frisør!'},{name:'Johanne',service:'Hodebunn massasje',time:'8 måneder siden',text:'Utrolig flink, det hjalp masse!'}];
-const BOOKED={'2026-05-12':['09:00','11:00','14:00'],'2026-05-13':['10:00','13:00'],'2026-05-14':['09:00','10:00','11:00','12:00'],'2026-05-15':['15:00','16:00'],'2026-05-19':['09:00','10:00'],'2026-05-20':['11:00','14:00','15:00']};
-const ALL_TIMES=['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00'];
-let selectedService=null,selectedDate=null,selectedTime=null,currentMonth=new Date().getMonth(),currentYear=new Date().getFullYear(),bookingCatFilter='alle',currentStep=1;
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.nav-links button').forEach(b=>b.classList.remove('active'));document.getElementById('page-'+id).classList.add('active');const btn=document.getElementById('nav-'+id);if(btn)btn.classList.add('active');window.scrollTo(0,0);if(id==='bestill'){renderBookingServices();renderCalendar()}if(id==='tjenester')renderServices();if(id==='anmeldelser')renderReviews()}
-function renderServices(cat='alle'){const list=document.getElementById('services-list');if(!list)return;const filtered=cat==='alle'?SERVICES:SERVICES.filter(s=>s.cat===cat);list.innerHTML=filtered.map(s=>`<div class="svc-row"><div><div class="svc-title">${s.name}</div><div class="svc-desc">${s.desc}</div></div><div class="svc-price">${s.price} kr</div></div>`).join('')}
-function filterCat(cat,btn){document.querySelectorAll('#page-tjenester .cat-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderServices(cat)}
-function renderReviews(){const grid=document.getElementById('reviews-grid');if(!grid)return;grid.innerHTML=REVIEWS.map(r=>`<div class="review-card"><div class="review-stars">★★★★★</div><p class="review-text">&ldquo;${r.text}&rdquo;</p><div class="review-author"><strong>${r.name}</strong> &bull; ${r.time}</div><div class="review-service">${r.service} utøver Kwan</div></div>`).join('')}
-function renderBookingServices(cat){cat=cat||bookingCatFilter;const list=document.getElementById('booking-services');if(!list)return;const filtered=cat==='alle'?SERVICES:SERVICES.filter(s=>s.cat===cat);list.innerHTML=filtered.map(s=>`<div class="svc-row${selectedService&&selectedService.id===s.id?' selected':''}" onclick="selectService(${s.id})"><div><div class="svc-title">${s.name}</div><div class="svc-desc">${s.desc}</div></div><div class="svc-price">${s.price} kr</div></div>`).join('')}
-function filterBookingCat(cat,btn){bookingCatFilter=cat;document.querySelectorAll('#bs-1 .cat-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderBookingServices(cat)}
-function selectService(id){selectedService=SERVICES.find(s=>s.id===id);renderBookingServices();document.getElementById('btn-next-1').disabled=false;updateSteps()}
-function renderCalendar(){const grid=document.getElementById('date-grid');if(!grid)return;const months=['Januar','Februar','Mars','April','Mai','Juni','Juli','August','September','Oktober','November','Desember'];document.getElementById('month-title').textContent=months[currentMonth]+' '+currentYear;const days=['Ma','Ti','On','To','Fr','Lø','Sø'];const today=new Date();today.setHours(0,0,0,0);const first=new Date(currentYear,currentMonth,1);let startDay=first.getDay();startDay=startDay===0?6:startDay-1;const daysInMonth=new Date(currentYear,currentMonth+1,0).getDate();let html=days.map(d=>`<div class="day-label">${d}</div>`).join('');for(let i=0;i<startDay;i++)html+='<div class="day-cell empty"></div>';for(let d=1;d<=daysInMonth;d++){const date=new Date(currentYear,currentMonth,d);date.setHours(0,0,0,0);const dateStr=`${currentYear}-${String(currentMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;const isPast=date<today;const isToday=date.getTime()===today.getTime();const isWeekend=date.getDay()===0;const isSelected=selectedDate===dateStr;let cls='day-cell';if(isPast||isWeekend)cls+=' past';else cls+=' available';if(isToday)cls+=' today';if(isSelected)cls+=' selected';html+=`<div class="${cls}" onclick="selectDate('${dateStr}')">${d}</div>`}grid.innerHTML=html;renderTimes()}
-function changeMonth(dir){currentMonth+=dir;if(currentMonth>11){currentMonth=0;currentYear++}if(currentMonth<0){currentMonth=11;currentYear--}renderCalendar()}
-function selectDate(dateStr){selectedDate=dateStr;selectedTime=null;document.getElementById('btn-next-2').disabled=true;renderCalendar()}
-function renderTimes(){const grid=document.getElementById('time-grid');if(!grid)return;if(!selectedDate){grid.innerHTML='<p style="color:#888;font-size:0.9rem">Velg en dato for å se ledige tider</p>';return}const booked=BOOKED[selectedDate]||[];grid.innerHTML=ALL_TIMES.map(t=>{const isBooked=booked.includes(t);const isSelected=selectedTime===t;let cls='time-slot '+(isBooked?'booked':'free');if(isSelected)cls='time-slot selected';return`<div class="${cls}" onclick="${isBooked?'':'selectTime(\''+t+'\')'}">${t}</div>`}).join('')}
-function selectTime(t){selectedTime=t;document.getElementById('btn-next-2').disabled=false;renderTimes();updateSteps()}
-function updateSteps(){const steps=[{label:'Tjeneste',val:selectedService?selectedService.name:null},{label:'Dato & tid',val:selectedDate&&selectedTime?selectedDate+' kl.'+selectedTime:null},{label:'Kontaktinfo',val:null}];const list=document.getElementById('step-list');if(!list)return;list.innerHTML=steps.map((s,i)=>`<div class="step ${s.val?'done':(i===currentStep-1?'current':'')}"><div class="step-num">${s.val?'✓':(i+1)}</div><div class="step-info"><strong>${s.label}</strong><span>${s.val||'Ikke valgt'}</span></div></div>`).join('')}
-function goStep(n){document.querySelectorAll('.booking-section').forEach(s=>s.classList.remove('active'));document.getElementById('bs-'+n).classList.add('active');currentStep=n;if(n===3)renderSummary();updateSteps()}
-function renderSummary(){const box=document.getElementById('booking-summary');if(!box||!selectedService)return;box.innerHTML=`<h4>Oppsummering</h4><div class="summary-row"><span>Tjeneste</span><span>${selectedService.name}</span></div><div class="summary-row"><span>Dato</span><span>${selectedDate}</span></div><div class="summary-row"><span>Tidspunkt</span><span>kl. ${selectedTime}</span></div><div class="summary-row"><span>Pris</span><span>${selectedService.price} kr</span></div>`}
-function sendBooking(){goStep(4)}
-(function(){if(new URLSearchParams(window.location.search).get('preview')==='off')return;var TEXT='DEMO sitekick.no',SPACINGX=280,SPACINGY=130,ANGLE=-35;var style=document.createElement('style');style.textContent=['#sk-watermark{position:fixed;inset:0;pointer-events:none;z-index:2147483647;overflow:hidden;}','#sk-watermark span{position:absolute;font-family:Arial,Helvetica,sans-serif;font-size:20px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(0,0,0,0.22);white-space:nowrap;user-select:none;-webkit-user-select:none;transform:rotate('+ANGLE+'deg);transform-origin:left top;text-shadow:0 1px 0 rgba(255,255,255,0.4);}'].join('');document.head.appendChild(style);var overlay=document.createElement('div');overlay.id='sk-watermark';document.body.appendChild(overlay);function fill(){var w=window.innerWidth,h=window.innerHeight,padding=200,html='';for(var y=-padding;y<h+padding;y+=SPACINGY)for(var x=-padding;x<w+padding;x+=SPACINGX)html+='<span style="left:'+x+'px;top:'+y+'px">'+TEXT+'</span>';overlay.innerHTML=html}fill();var t;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(fill,100)})})();
-renderServices();renderReviews();renderBookingServices();renderCalendar();updateSteps();
-</script>
+            <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 1.5rem;">Herreklipp</h3>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Herreklipp</h3>
+                    <div class="price">kr 350</div>
+                    <p>Moderne herreklipp</p>
+                </div>
+                <div class="service-card">
+                    <h3>Herreklipp & Skjegg</h3>
+                    <div class="price">kr 500</div>
+                    <p>Klipp og skjeggtrim</p>
+                </div>
+                <div class="service-card">
+                    <h3>Fade Klipp</h3>
+                    <div class="price">kr 400</div>
+                    <p>Profesjonell fade</p>
+                </div>
+            </div>
+
+            <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 1.5rem;">Farge & Behandling</h3>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Hårfarge</h3>
+                    <div class="price">fra kr 800</div>
+                    <p>Profesjonell hårfarge</p>
+                </div>
+                <div class="service-card">
+                    <h3>Highlights</h3>
+                    <div class="price">fra kr 1200</div>
+                    <p>Lyst og naturlig</p>
+                </div>
+                <div class="service-card">
+                    <h3>Balayage</h3>
+                    <div class="price">fra kr 1500</div>
+                    <p>Håndmalt fargeteknikk</p>
+                </div>
+                <div class="service-card">
+                    <h3>Permanent</h3>
+                    <div class="price">fra kr 1000</div>
+                    <p>Langvarig krøll</p>
+                </div>
+            </div>
+
+            <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 1.5rem;">Spesialbehandlinger</h3>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Massasje 30 min</h3>
+                    <div class="price">kr 400</div>
+                    <p>Avslappende massasje</p>
+                </div>
+                <div class="service-card">
+                    <h3>Massasje 60 min</h3>
+                    <div class="price">kr 700</div>
+                    <p>Full massasje</p>
+                </div>
+                <div class="service-card">
+                    <h3>Hårkur</h3>
+                    <div class="price">fra kr 300</div>
+                    <p>Næring og glans</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Anmeldelser -->
+    <section id="anmeldelser" style="background: var(--light);">
+        <div class="container">
+            <div class="section-header">
+                <h2>Hva våre kunder sier</h2>
+                <p>Anmeldelser fra fornøyde kunder</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Fantastisk service og resultat! Anbefales på det sterkeste."</p>
+                    <div class="review-author">- Fornøyd kunde</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Veldig dyktige frisører. Kommer alltid tilbake hit."</p>
+                    <div class="review-author">- Fornøyd kunde</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Beste frisørsalongen i Bergen! Hyggelig personale."</p>
+                    <div class="review-author">- Fornøyd kunde</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontakt -->
+    <section id="kontakt">
+        <div class="container">
+            <div class="section-header">
+                <h2>Kontakt Oss</h2>
+                <p>Vi gleder oss til å høre fra deg</p>
+            </div>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h3>📍 Adresse</h3>
+                    <p>Valkendorfsgaten 7<br>Bergen, Norge</p>
+                </div>
+                <div class="contact-item">
+                    <h3>📞 Telefon</h3>
+                    <p>Ring oss for time</p>
+                </div>
+                <div class="contact-item">
+                    <h3>⏰ Åpningstider</h3>
+                    <p>Mandag - Fredag: 09:00 - 18:00<br>Lørdag: 09:00 - 15:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Kom Inn Frisør AS. Alle rettigheter reservert.</p>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Mobile menu
+        function toggleMenu() {
+            document.getElementById('navLinks').classList.toggle('active');
+        }
+
+        function closeMenu() {
+            document.getElementById('navLinks').classList.remove('active');
+        }
+
+        // Navbar transparency on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(255,255,255,1)';
+            } else {
+                nav.style.background = 'rgba(255,255,255,0.98)';
+            }
+        });
+    </script>
 </body>
 </html>
